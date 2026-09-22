@@ -1,0 +1,56 @@
+services:
+  database:
+    image: postgres:16-alpine
+    container_name: dailytask_db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:Z
+    environment:
+      POSTGRES_DB: dailytask
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret123
+    networks:
+      - dailytask_net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: dailytask_api
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://admin:secret123@database:5432/dailytask
+      PYTHONUNBUFFERED: 1
+    networks:
+      - dailytask_net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: dailytask_web
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    depends_on:
+      - backend
+    environment:
+      APP_URL: http://localhost:8000
+      API_URL: http://backend:8080
+    networks:
+      - dailytask_net
+
+networks:
+  dailytask_net:
+    driver: bridge
+
+volumes:
+  pg_data:

@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+vendor/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+.env.local
+.env.production
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Laravel
+storage/logs/*.log
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+
+# Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Database
+*.db
+
+# Docker/Podman
+postgres_data/
