@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import List
 from datetime import date
-from ...database import get_db
-from ...models import Task, Category
-from ...schemas import TaskCreate, TaskUpdate, TaskResponse
+from app.database import get_db
+from app.models import Task, Category
+from app.schemas import TaskCreate, TaskUpdate, TaskResponse
 
 router = APIRouter(prefix="/api/tasks", tags=["tasks"])
 

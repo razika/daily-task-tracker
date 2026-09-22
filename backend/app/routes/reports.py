@@ -3,9 +3,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from datetime import date, timedelta
 from typing import Optional
-from ...database import get_db
-from ...models import Task
-from ...schemas import DailySummary, DailySummary
+from app.database import get_db
+from app.models import Task
+from app.schemas import DailySummary, DailySummary
 
 router = APIRouter(prefix="/api/reports", tags=["reports"])
 
